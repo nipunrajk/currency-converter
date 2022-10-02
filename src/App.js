@@ -32,6 +32,17 @@ function App() {
       })
   }, [])
 
+  useEffect(() => {
+    if (fromCurrency != null && toCurrency != null) {
+      fetch(
+        `${BASE_URL}?symbols=${toCurrency}&base=${fromCurrency}`,
+        requestOptions
+      )
+        .then((res) => res.json())
+        .then((data) => setExchangeRate(data.rates[toCurrency]))
+    }
+  }, [fromCurrency, toCurrency])
+
   const handleFromAmountChange = (e) => {
     setAmount(e.target.value)
     setAmountInFromCurrency(true)
